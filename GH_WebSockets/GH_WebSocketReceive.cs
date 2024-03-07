@@ -22,7 +22,9 @@ namespace GH_WebSockets
     {
         ClientWebSocket ws = null;
         string msg = null;
+        string lastMsg = null;
         bool update = true;
+        bool listening = false;
 
         /// <summary>
         /// Initializes a new instance of the WebSocketReceive class.
@@ -62,29 +64,33 @@ namespace GH_WebSockets
             if (!DA.GetData(0, ref ws)) return;
             if (!DA.GetData(1, ref update)) return;
 
-
-
             if (ws != null)
             {
                 if (ws.State == WebSocketState.Open)
                 {
                     if (update)
                     {
-                        try
+                        if (!listening)
                         {
-                            Message = "Listening";
-                            DA.SetData(0, msg);
-                            Task.Run(() => Listen(null, ws));
+                            listening = true;
+                            try
+                            {
+                                Task.Run(() => Listen(null, ws));
+                            }
+                            catch (Exception e)
+                            {
+                                AddRuntimeMessage(GH_RuntimeMessageLevel.Error, e.Message);
+                            }
                         }
-                        catch (Exception e)
-                        {
-                            AddRuntimeMessage(GH_RuntimeMessageLevel.Error, e.Message);
-                        }
+                        
+                        Message = "Listening";
+                        DA.SetData(0, msg);
+                        lastMsg = msg;
                     }
                     else
                     {
                         Message = "Not Listening";
-                        DA.SetData(0, msg);                  
+                        DA.SetData(0, lastMsg);
                     }
                 }
             }
@@ -117,10 +123,10 @@ namespace GH_WebSockets
                         {
                             using var reader = new StreamReader(ms, Encoding.UTF8);
 
-                            if (update)
-                        {
+
+                        
                             msg = reader.ReadToEnd();
-                        }
+                        
                             
                             RhinoApp.InvokeOnUiThread((Action)delegate { ExpireSolution(true); });
                         }
