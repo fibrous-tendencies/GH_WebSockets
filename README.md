@@ -6,4 +6,4 @@ The server can be written in any language that supports the WebSocket protocol. 
 
 There are three components. 
 
-![Start](GH_WebSockets\Resources\Start.png)
+![Start](GH_WebSockets/Resources/Start.png)
