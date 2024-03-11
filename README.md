@@ -6,7 +6,7 @@ The preferred installation method is using the PackageManager in Rhino. Just sea
 
 GH_WebSockets is designed to be as neutral as possible and not make any assumptions about the server configuration. 
 
-The server used can be written in any language that supports the WebSocket protocol. Example files for an echo server can be found [in Examples](Examples). 
+The server used can be written in any language that supports the WebSocket protocol. Example files for an echo server can be found in [Examples](Examples). 
 
 There are three components in GH_WebSockets and after installation these are available under the **Params** tab in grasshopper: **`Start`**, **`Send`**, and **`Receive`**.
 
