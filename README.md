@@ -2,9 +2,9 @@
 
 GH_WebSockets is a plugin to grasshopper for Rhino 8. It provides functionality for creating a WebSocket client within grasshopper for sending and receiving data with an external WebSocket server. It implements a WebSocket client using .net core and is not backwards compatible with previous version of rhino. For WebSocket support in previous version of rhino, refer to [Bengesht](https://www.food4rhino.com/en/app/bengesht) for similar functionality.
 
-The preferred installation method is using the PackageManager in Rhino. Just search *GH_WebSockets*.
+The preferred installation method is using the PackageManager in Rhino. Just search *WebSockets*.
 
-GH_WebSockets is designed to be as neutral as possible and not make any assumptions about the server configuration. 
+WebSockets is designed to be as neutral as possible and not make any assumptions about the server configuration. 
 
 The server used can be written in any language that supports the WebSocket protocol. Example files for an echo server can be found in [Examples](Examples). 
 
@@ -32,5 +32,5 @@ The **`Receive`** node has one required input **WS**. There is also an optional 
 - **Update** - Boolean flag for receiving updates (Defaults to *True*). Attach a boolean toggle or button to prevent downstream updates.
 
 >[!NOTE]
->**`Receive`** is receiving messages in the background even though it is not updating the downstream components. If multiple messages have been sent back to the receive component from the server while **Update** is set to false, setting it to true will update the ouptput with the *last* message sent back to grasshopper. 
+>**`Receive`** is receiving messages in the background even though it is not updating the downstream components. If multiple messages have been sent back to the receive component from the server while **Update** is set to false, setting it to true will update the ouptput with the *last* message sent back to grasshopper. I.e. It is not queing the messages.
 
