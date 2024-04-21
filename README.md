@@ -2,9 +2,11 @@
 
 GH_WebSockets is a plugin to grasshopper for Rhino 8. It provides functionality for creating a WebSocket client within grasshopper for sending and receiving data with an external WebSocket server. It implements a WebSocket client using .net core and is not backwards compatible with previous version of rhino. For WebSocket support in previous version of rhino, refer to [Bengesht](https://www.food4rhino.com/en/app/bengesht) for similar functionality.
 
+The preferred installation method is using the PackageManager in Rhino. Just search *GH_WebSockets*.
+
 GH_WebSockets is designed to be as neutral as possible and not make any assumptions about the server configuration. 
 
-The server used can be written in any language that supports the WebSocket protocol. Example files for an echo server can be found [in Examples](Examples). 
+The server used can be written in any language that supports the WebSocket protocol. Example files for an echo server can be found in [Examples](Examples). 
 
 There are three components in GH_WebSockets and after installation these are available under the **Params** tab in grasshopper: **`Start`**, **`Send`**, and **`Receive`**.
 
