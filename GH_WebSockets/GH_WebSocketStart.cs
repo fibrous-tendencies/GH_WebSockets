@@ -16,6 +16,7 @@ namespace GH_WebSockets
     {
         ClientWebSocket ws = null;
         GH_Document ghDoc = null;
+        bool reset = false;
 
         /// <summary>
         /// Initializes a new instance of the GH_WebSocketStart class.
@@ -54,7 +55,6 @@ namespace GH_WebSockets
         {
             string host = "";
             string port = "";
-            bool reset = false;
             string msg = "init";
 
             if (!DA.GetData(0, ref host)) return;
@@ -84,12 +84,22 @@ namespace GH_WebSockets
                     try
                     {
                         await Close(ws);
-                        ws = new();
+                    }
+                    catch (Exception e)
+                    {
+                        ws.Dispose();
+                        AddRuntimeMessage(GH_RuntimeMessageLevel.Error, e.Message);
+                    }
+                    ws = new();
+                    try
+                    {
+                        await Connect(ws, host, port);
                     }
                     catch (Exception e)
                     {
                         AddRuntimeMessage(GH_RuntimeMessageLevel.Error, e.Message);
                     }
+                    return;
                 }
                 else
                 {
@@ -152,7 +162,7 @@ namespace GH_WebSockets
             }
         }
 
-        private async Task Connect(ClientWebSocket ws, string host, string port)
+        internal async Task Connect(ClientWebSocket ws, string host, string port)
         {
             await ws.ConnectAsync(new Uri($"ws://{host}:{port}/ws"), CancellationToken.None);
             ExpireSolution(true);
@@ -185,7 +195,6 @@ namespace GH_WebSockets
             if (ghDoc != null && doc.DocumentID == ghDoc.DocumentID)
             {
                 Task.Run(() => Close(ws));
-
             }
         }
 
